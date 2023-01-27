@@ -82,7 +82,7 @@ class StudentListScreenState extends State<StudentListScreen> {
                   children: <Widget>[
                     profilePhoto(index),
                     Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -166,10 +166,13 @@ class StudentListScreenState extends State<StudentListScreen> {
   ClipRRect profilePhoto(int index) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
-      child: Image.network(
-        displayAllStudents?[index].photo ?? '',
-        width: 80,
-        height: 80,
+      child: Hero(
+        tag: displayAllStudents?[index].id ?? 0,
+        child: Image.network(
+          displayAllStudents?[index].photo ?? '',
+          width: 80,
+          height: 80,
+        ),
       ),
     );
   }

@@ -54,10 +54,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: EdgeInsets.only(top: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          studentModel?.photo ?? "",
-                          width: size.width * .38,
-                          height: size.height * .25,
+                        child: Hero(
+                          tag: studentModel?.id ?? 0,
+                          child: Image.network(
+                            studentModel?.photo ?? "",
+                            width: size.width * .38,
+                            height: size.height * .25,
+                          ),
                         ),
                       ),
                     ),

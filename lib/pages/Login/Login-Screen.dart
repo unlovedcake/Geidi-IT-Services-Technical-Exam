@@ -27,6 +27,7 @@ class LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -66,7 +67,11 @@ class LoginScreenState extends State<LoginScreen> {
           textInputAction: TextInputAction.next,
           controller: userNameController,
           decoration: const InputDecoration(
-              border: OutlineInputBorder(), labelText: 'User Name', hintText: 'Enter username'),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(),
+              labelText: 'User Name',
+              hintText: 'Enter username'),
         ),
         SizedBox(
           height: size.height * .02,
@@ -76,6 +81,8 @@ class LoginScreenState extends State<LoginScreen> {
           obscureText: _obscureText,
           controller: passwordController,
           decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
               suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
@@ -104,7 +111,8 @@ class LoginScreenState extends State<LoginScreen> {
         Container(
           height: size.height * .09,
           width: double.infinity,
-          decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+          decoration:
+              BoxDecoration(color: Colors.blue.shade400, borderRadius: BorderRadius.circular(10)),
           child: OutlinedButton(
             onPressed: () {
               startShowLoadingView();
@@ -123,13 +131,13 @@ class LoginScreenState extends State<LoginScreen> {
         InkWell(
           onTap: () {},
           child: RichText(
-            text: const TextSpan(
+            text: TextSpan(
               text: 'New User? ',
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: const TextStyle(fontSize: 18, color: Colors.black),
               children: <TextSpan>[
                 TextSpan(
                     text: 'Create Account',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade400)),
               ],
             ),
           ),

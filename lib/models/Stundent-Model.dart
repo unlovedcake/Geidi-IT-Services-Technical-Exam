@@ -1,4 +1,5 @@
 class StudentModel {
+  int? id;
   String? name;
   final int? age;
   final String? course;
@@ -6,11 +7,13 @@ class StudentModel {
   final String? photo;
   final List<String>? subjects;
 
-  StudentModel({this.name, this.age, this.course, this.yearLevel, this.photo, this.subjects});
+  StudentModel(
+      {this.id, this.name, this.age, this.course, this.yearLevel, this.photo, this.subjects});
 }
 
 List<StudentModel> students = [
   StudentModel(
+      id: 1,
       name: "John Doe",
       age: 20,
       course: "Computer Science",
@@ -19,6 +22,7 @@ List<StudentModel> students = [
       photo:
           "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"),
   StudentModel(
+      id: 2,
       name: "Jane Doe",
       age: 22,
       course: "Information Technology",
@@ -27,6 +31,7 @@ List<StudentModel> students = [
       photo:
           "https://w7.pngwing.com/pngs/481/915/png-transparent-computer-icons-user-avatar-woman-avatar-computer-business-conversation-thumbnail.png"),
   StudentModel(
+      id: 3,
       name: "Mark Johnson",
       age: 21,
       course: "Business Administration",
@@ -34,6 +39,7 @@ List<StudentModel> students = [
       subjects: ["Computer Science", "Physics", "Chemistry"],
       photo: "https://cdn-icons-png.flaticon.com/512/147/147144.png"),
   StudentModel(
+      id: 4,
       name: "Emma Watson",
       age: 19,
       course: "Nursing",
@@ -42,6 +48,7 @@ List<StudentModel> students = [
       photo:
           "https://w7.pngwing.com/pngs/481/915/png-transparent-computer-icons-user-avatar-woman-avatar-computer-business-conversation-thumbnail.png"),
   StudentModel(
+      id: 5,
       name: "Michael Brown",
       age: 22,
       course: "Electrical Engineering",
@@ -49,6 +56,7 @@ List<StudentModel> students = [
       subjects: ["Programming Flutter", "Math", "English"],
       photo: "https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png"),
   StudentModel(
+      id: 6,
       name: "Emily Smith",
       age: 20,
       course: "Biology",
@@ -57,6 +65,7 @@ List<StudentModel> students = [
       photo:
           "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"),
   StudentModel(
+      id: 7,
       name: "Matthew Wilson",
       age: 21,
       course: "Chemistry",
@@ -65,6 +74,7 @@ List<StudentModel> students = [
       photo:
           "https://static.wikia.nocookie.net/jamescameronsavatar/images/e/e5/Avatar_TWoW_Neytiri_Textless_Poster.jpg/revision/latest?cb=20221125232909"),
   StudentModel(
+      id: 8,
       name: "Madison Davis",
       age: 19,
       course: "Political Science",
@@ -73,6 +83,7 @@ List<StudentModel> students = [
       photo:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGjR6KWZBf3_2C_UPQGkp4qRF9GfPafu2y-2CLAofOc-IDOn8liwUBEMB11fIMXACwgiw&usqp=CAU"),
   StudentModel(
+      id: 9,
       name: "Joshua Garcia",
       age: 22,
       course: "Sociology",
@@ -80,6 +91,7 @@ List<StudentModel> students = [
       subjects: ["Python", "Art", "Physical Education"],
       photo: "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png"),
   StudentModel(
+      id: 10,
       name: "Nicholas Rodriguez",
       age: 20,
       course: "Mathematics",
