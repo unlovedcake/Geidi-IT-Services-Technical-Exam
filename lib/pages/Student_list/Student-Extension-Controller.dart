@@ -1,10 +1,18 @@
 part of 'Student-List-Screen.dart';
 
 extension ExtensionStudentController on StudentListScreenState {
-
-
-  Future<List<StudentModel>> fetchStudentData() async {
-    return students;
+  void getAllStudents() {
+    displayAllStudents = students;
   }
 
+  void _searchFilter(String enteredKeyword) {
+    if (enteredKeyword.isEmpty) {
+      getAllStudents();
+    } else {
+      displayAllStudents = students
+          .where((studentName) =>
+              studentName.name!.toUpperCase().contains(enteredKeyword.toUpperCase()))
+          .toList();
+    }
+  }
 }

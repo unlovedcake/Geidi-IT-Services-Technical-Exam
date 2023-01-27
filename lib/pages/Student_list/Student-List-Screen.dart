@@ -8,6 +8,7 @@ import '../../Router/Navigate-Route.dart';
 import '../../models/Stundent-Model.dart';
 import '../../models/Stundent-Model.dart';
 import '../../models/Stundent-Model.dart';
+import '../../utilities/RichText-HightTermText.dart';
 part 'Student-Extension-Controller.dart';
 
 class StudentListScreen extends StatefulWidget {
@@ -18,11 +19,24 @@ class StudentListScreen extends StatefulWidget {
 }
 
 class StudentListScreenState extends State<StudentListScreen> {
+  TextEditingController searchController = TextEditingController();
+
+  String highLightSearchtTerm = "";
+
+  List<StudentModel>? displayAllStudents = [];
+
+  @override
+  void initState() {
+    getAllStudents();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var style1 = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
@@ -30,43 +44,122 @@ class StudentListScreenState extends State<StudentListScreen> {
         elevation: 0,
         title: const Text('Student List', style: TextStyle(color: Colors.black)),
       ),
-      body: FutureBuilder<List<StudentModel>>(
-        future: fetchStudentData(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("${snapshot.error}"));
-          }
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(height: size.height * .02),
+            searchTextField(),
+            SizedBox(height: size.height * .02),
+            listViewDataStudents(style1, size),
+          ],
+        ),
+      ),
+    );
+  }
 
-          return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: students.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  //sav selected student to global variable
-                  studentModel = students[index];
-                  Navigator.of(context).push(pageRouteAnimate(const ProfileScreen()));
-                },
-                child: Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Row(
-                      children: <Widget>[
-                        profilePhoto(index),
-                        textFieldNameAgeCourseYear(index, style1, size),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_outlined),
-                      ],
-                    ),
-                  ),
-                ),
-              );
+  Expanded listViewDataStudents(TextStyle style1, Size size) {
+    displayAllStudents?.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
+
+    return Expanded(
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: displayAllStudents?.length ?? 0,
+        itemBuilder: (context, index) {
+          String suggestion = displayAllStudents?[index].name.toString().toUpperCase() ?? "";
+          int startIndex = suggestion.indexOf(highLightSearchtTerm);
+          return InkWell(
+            onTap: () {
+              //sav selected student to global variable
+              studentModel = displayAllStudents?[index];
+              Navigator.of(context).push(pageRouteAnimate(const ProfileScreen()));
+              FocusScope.of(context).unfocus();
             },
+            child: Card(
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Row(
+                  children: <Widget>[
+                    profilePhoto(index),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: startIndex != -1
+                                ? searchHiglightTermText(suggestion, highLightSearchtTerm)
+                                : const SizedBox.shrink(),
+                          ),
+                          // Text(
+                          //   students[index].name ?? "",
+                          //   style: style1,
+                          // ),
+                          Text("Age : ${displayAllStudents?[index].age}"),
+                          SizedBox(
+                            width: size.width * .38,
+                            child: Divider(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  displayAllStudents?[index].course ?? "",
+                                  style: style1,
+                                ),
+                                Text("Year Level : ${displayAllStudents?[index].yearLevel}"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.arrow_forward_ios_outlined),
+                  ],
+                ),
+              ),
+            ),
           );
         },
       ),
+    );
+  }
+
+  TextField searchTextField() {
+    return TextField(
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.done,
+      controller: searchController,
+      decoration: InputDecoration(
+        focusedBorder:
+            const OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.black)),
+        suffixIcon: const Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey, width: 1.0),
+        ),
+        hintText: 'Search...',
+        fillColor: Colors.white,
+        filled: true,
+      ),
+      onChanged: (value) {
+        setState(() {
+          highLightSearchtTerm = value.toUpperCase();
+          _searchFilter(value);
+        });
+      },
     );
   }
 
@@ -74,7 +167,7 @@ class StudentListScreenState extends State<StudentListScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
-        students[index].photo ?? '',
+        displayAllStudents?[index].photo ?? '',
         width: 80,
         height: 80,
       ),
@@ -83,16 +176,16 @@ class StudentListScreenState extends State<StudentListScreen> {
 
   Padding textFieldNameAgeCourseYear(int index, TextStyle style1, Size size) {
     return Padding(
-      padding: const EdgeInsets.only(left: 40.0),
+      padding: const EdgeInsets.only(left: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            students[index].name ?? "",
+            displayAllStudents?[index].name ?? "",
             style: style1,
           ),
-          Text("Age : ${students[index].age}"),
+          Text("Age : ${displayAllStudents?[index].age}"),
           SizedBox(
             width: size.width * .38,
             child: Divider(
@@ -106,10 +199,10 @@ class StudentListScreenState extends State<StudentListScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  students[index].course ?? "",
+                  displayAllStudents?[index].course ?? "",
                   style: style1,
                 ),
-                Text("Year Level : ${students[index].yearLevel}"),
+                Text("Year Level : ${displayAllStudents?[index].yearLevel}"),
               ],
             ),
           ),

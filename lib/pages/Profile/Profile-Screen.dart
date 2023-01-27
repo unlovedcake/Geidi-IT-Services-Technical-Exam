@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 width: size.width,
-                height: size.height * .65,
+                height: size.height * .75,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: const [
                   BoxShadow(
@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: style2,
                     ),
                     SizedBox(
-                      height: size.height * .06,
+                      height: size.height * .04,
                     ),
                     Text(
                       studentModel?.course ?? "",
@@ -80,35 +80,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       "Year Level : ${studentModel?.yearLevel ?? ""}",
                       style: style2,
                     ),
+                    SizedBox(
+                      height: size.height * .04,
+                    ),
+                    Text(
+                      "Subjects",
+                      style: style1,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      height: 100,
+                      child: Column(
+                        children: List.generate(
+                          studentModel?.subjects!.length ?? 1,
+                          (index) => Text(
+                            studentModel?.subjects![index] ?? "",
+                            style: style2,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
-            Wrap(
-              spacing: 20,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Rank',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Hobbies',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Status',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                )
-              ],
             ),
           ],
         ),
