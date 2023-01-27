@@ -96,7 +96,7 @@ List<StudentModel> students = [
       age: 20,
       course: "Mathematics",
       yearLevel: 3,
-      subjects: ["Programming 1", "Science", "History"],
+      // subjects: ["Programming 1", "Science", "History"],
       photo:
           "https://media.istockphoto.com/id/1331329483/vector/female-avatar-icon.jpg?s=612x612&w=0&k=20&c=VPS89ZjzR7Ft7YkJWCg2ItTQTeIhdXjEut-Hc1gcpPI="),
 ];

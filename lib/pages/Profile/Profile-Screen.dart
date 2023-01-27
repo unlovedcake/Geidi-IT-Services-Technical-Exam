@@ -99,9 +99,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 100,
                       child: Column(
                         children: List.generate(
-                          studentModel?.subjects!.length ?? 1,
+                          studentModel?.subjects?.length ?? 1,
                           (index) => Text(
-                            studentModel?.subjects![index] ?? "",
+                            studentModel?.subjects?[index] ?? "Nothing Found.",
                             style: style2,
                           ),
                         ),
