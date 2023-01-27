@@ -172,6 +172,7 @@ class StudentListScreenState extends State<StudentListScreen> {
           displayAllStudents?[index].photo ?? '',
           width: 80,
           height: 80,
+          fit: BoxFit.cover,
         ),
       ),
     );

@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 width: size.width,
-                height: size.height * .75,
+                height: size.height * .79,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(12), boxShadow: const [
                   BoxShadow(
@@ -51,18 +51,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 8),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: Hero(
                           tag: studentModel?.id ?? 0,
                           child: Image.network(
                             studentModel?.photo ?? "",
-                            width: size.width * .38,
-                            height: size.height * .25,
+                            width: size.width * .48,
+                            height: size.height * .28,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: size.height * .02,
                     ),
                     Text(
                       studentModel?.name ?? "",
